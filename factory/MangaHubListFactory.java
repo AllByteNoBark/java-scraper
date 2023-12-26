@@ -13,22 +13,25 @@ import main.scraper.MangaHubList;
 import static main.util.Utility.print;
 
 public class MangaHubListFactory extends Thread{
+	private final String website = "https://mangahub.io/";
 	private int startingPoint;
 	private int increment;
+	private String saveType;
 	
 	public MangaHubListFactory() {}
 	
-	public MangaHubListFactory(int start, int inc) {
+	public MangaHubListFactory(int start, int inc, String type) {
 		this.startingPoint = start;
 		this.increment = inc;
+		this.saveType = type;
 	}
 	
-	public MangaHubResponse scrape(String website) {
-		return this.createList(website, 1761, 1);
+	public MangaHubResponse scrape() {
+		return this.createList(this.website, 1761, 1);
 	}
 	
-	public MangaHubResponse scrape(String website, int startingPoint, int increment) {
-		return this.createList(website, startingPoint, increment);
+	public MangaHubResponse scrape(int startingPoint, int increment) {
+		return this.createList(this.website, startingPoint, increment);
 	}
 	
 	public MangaHubResponse createList(String website, int startingPoint, int increment) {
@@ -69,6 +72,17 @@ public class MangaHubListFactory extends Thread{
 	}
 	
 	public void run() {
-		scrape("https://mangahub.io/", this.startingPoint, this.increment);
+		switch(this.saveType) {
+			case "text":
+				scrape(this.startingPoint, this.increment).toText();
+			case "json":
+				scrape(this.startingPoint, this.increment).toText();
+			case "mysql":
+				scrape(this.startingPoint, this.increment).toText();
+			case "xml":
+				scrape(this.startingPoint, this.increment).toText();
+			default:
+				print("Data type not supported!");
+		}
 	}
 }

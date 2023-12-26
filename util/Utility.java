@@ -9,7 +9,9 @@ public class Utility {
 	private static BufferedReader buffer = new BufferedReader(input);
 	
 	public static Object input(String msg, Class<?> x) {
-		print(msg);
+		if(!msg.equalsIgnoreCase("")) {
+			print(msg);
+		}
 		
 		String str = null;
 		try {

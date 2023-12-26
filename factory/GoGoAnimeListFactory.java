@@ -13,22 +13,25 @@ import main.responses.GoGoAnimeResponse;
 import main.scraper.GoGoAnimeList;
 
 public class GoGoAnimeListFactory extends Thread{
+	private final String website = "https://gogoanime3.net/";
 	private int startingPoint;
 	private int increment;
+	private String saveType; 
 	
 	public GoGoAnimeListFactory() {}
 	
-	public GoGoAnimeListFactory(int start, int inc) {
+	public GoGoAnimeListFactory(int start, int inc, String type) {
 		this.startingPoint = start;
 		this.increment = inc;
+		this.saveType = type;
 	}
 	
-	public GoGoAnimeResponse scrape(String website) {
-		return this.createList(website, 95, 1);
+	public GoGoAnimeResponse scrape() {
+		return this.createList(this.website, 95, 1);
 	}
 	
-	public GoGoAnimeResponse scrape(String website, int startingPoint, int increment) {
-		return this.createList(website, startingPoint, increment);
+	public GoGoAnimeResponse scrape(int startingPoint, int increment) {
+		return this.createList(this.website, startingPoint, increment);
 	}
 	
 	public GoGoAnimeResponse createList(String website, int startingPoint, int increment) {
@@ -69,6 +72,17 @@ public class GoGoAnimeListFactory extends Thread{
 	}
 	
 	public void run() {
-		createList("https://gogoanime3.net/", this.startingPoint, this.increment);
+		switch(this.saveType) {
+			case "text":
+				scrape(this.startingPoint, this.increment).toText();
+			case "json":
+				scrape(this.startingPoint, this.increment).toText();
+			case "mysql":
+				scrape(this.startingPoint, this.increment).toText();
+			case "xml":
+				scrape(this.startingPoint, this.increment).toText();
+			default:
+				print("Data type not supported!");
+		}
 	}
 }
