@@ -2,6 +2,8 @@ package main;
 
 import main.factory.GoGoAnimeListFactory;
 import main.factory.MangaHubListFactory;
+import main.thread.GoGoAnimeThread;
+import main.thread.MangaHubThread;
 
 import static main.util.Utility.print;
 
@@ -9,11 +11,13 @@ import static main.util.Utility.print;
 public class Main {
 
 	public static void main(String[] args) {
-		MangaHubListFactory mangahub = new MangaHubListFactory();
-		GoGoAnimeListFactory gogoanime = new GoGoAnimeListFactory();
+		MangaHubListFactory testManga = new MangaHubListFactory();
+		GoGoAnimeListFactory testAnime = new GoGoAnimeListFactory();
+		MangaHubThread mangahub = new MangaHubThread();
+		GoGoAnimeThread gogoanime = new GoGoAnimeThread();
 		
-		// mangahub.createList("https://mangahub.io/");
-		gogoanime.createList("https://gogoanime3.net/");
+		testManga.scrape("https://mangahub.io/").toText();
+		testAnime.scrape("https://gogoanime3.net/").toText();
 	}
 
 }

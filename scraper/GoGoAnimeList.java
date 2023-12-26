@@ -1,7 +1,6 @@
 package main.scraper;
 
 import java.io.IOException;
-import static main.util.Utility.print;
 import java.util.ArrayList;
 
 import org.jsoup.Jsoup;

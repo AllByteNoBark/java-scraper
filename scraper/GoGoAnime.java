@@ -1,6 +1,7 @@
 package main.scraper;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,18 +13,18 @@ import static main.util.Utility.print;
 
 public class GoGoAnime extends BaseScraper {
 	public Anime scrape(String website) {
-		Anime anime = null;
-		String name = null;
-		String description = null;
+		String name = "";
+		String description = "";
 		int year = 0;
 		int episodes = 0;
-		String art = null;
+		String art = "";
 		
 		try {
-			print(website);
 			Document html = Jsoup.connect(website).get();
 			
 			Element animeInfoBody = html.selectFirst("div.anime_info_body").selectFirst("div.anime_info_body_bg");
+			
+			if(animeInfoBody == null) return new Anime(name, description, year, episodes, art);
 			
 			name = animeInfoBody.selectFirst("h1").text();
 			art = animeInfoBody.selectFirst("img").attr("src");
@@ -35,17 +36,22 @@ public class GoGoAnime extends BaseScraper {
 				String temp = p.selectFirst("span").text();
 				if(temp.equalsIgnoreCase("plot summary:")) {
 					description = p.text();
-					description = description.substring(temp.length(), description.length());
+					if(description.length() == temp.length()) {
+						description = "Empty";
+					} else {
+						description = description.substring(temp.length()+1, description.length());
+					}
 				} else if(temp.equalsIgnoreCase("released:")) {
 					year = Integer.parseInt(p.text().substring(temp.length()+1, p.text().length()));
 				}
 			}
-			
-			anime = new Anime(name, description, year, episodes, art);
 		} catch (IOException e) {
-			e.printStackTrace();
+			print("[Error]: " + e.getMessage());
+			if(e.getClass() == SocketTimeoutException.class) {
+				scrape(website);
+			}
 		}
 		
-		return anime;
+		return new Anime(name, description, year, episodes, art);
 	}
 }

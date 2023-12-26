@@ -1,6 +1,7 @@
 package main.scraper;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -8,15 +9,14 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import main.object.Manga;
-
+import static main.util.Utility.print;
 public class MangaHub extends BaseScraper{
 	public Manga scrape(String website) {
-		Manga manga = null;
-		String name = null;
-		String summary = null;
-		String author = null;
-		String artist = null;
-		String status = null;
+		String name =  "";
+		String summary = "";
+		String author = "";
+		String artist = "";
+		String status = "";
 		
 		try {
 			Document html = Jsoup.connect(website)
@@ -24,6 +24,8 @@ public class MangaHub extends BaseScraper{
 					.get();
 			
 			Element mangaInfo = html.selectFirst("section._2fecr > div.container-fluid > div.row > div._3owCZ");
+			
+			if(mangaInfo == null) return new Manga(name, summary, author, artist, status);
 		
 			Element fullNames = mangaInfo.selectFirst("h1");
 			name = fullNames.text().substring(0, fullNames.text().length() - fullNames.selectFirst("small").text().length());
@@ -53,13 +55,13 @@ public class MangaHub extends BaseScraper{
 			
 			Elements sumup = html.select("section:eq(2) > div.container-fluid > div.row > div.col-xs-12 > div._2wcqV > div.tab-content > div#chapters-tab-pane-999 > div > p");
 			summary = sumup.text();
-			
-			manga = new Manga(name, summary, author, artist, status);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			print("[Error]: " + e.getMessage());
+			if(e.getClass() == SocketTimeoutException.class) {
+				scrape(website);
+			}
 		}
 		
-		return manga;
+		return new Manga(name, summary, author, artist, status);
 	}
 }

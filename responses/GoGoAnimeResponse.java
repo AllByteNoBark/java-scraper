@@ -1,10 +1,10 @@
 package main.responses;
 
+import static main.util.Utility.print;
 
-import java.util.ArrayList;
-public class GoGoAnimeResponse {
-	public void listResponse(ArrayList<String> list) {
-		
-		
+public class GoGoAnimeResponse extends BaseResponse {
+	public void toText() {
+		print("Exporting GoGoAnime data to txt!");
+		this.toText("IO/GoGoAnime/output.txt");
 	}
 }
