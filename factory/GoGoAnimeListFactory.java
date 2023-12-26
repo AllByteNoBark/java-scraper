@@ -1,22 +1,28 @@
 package main.factory;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import static main.util.Utility.print;
 
-import main.responses.GoGoAnimeResponse;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import main.object.Anime;
 import main.scraper.GoGoAnimeList;
 
 public class GoGoAnimeListFactory {
 	public void createList(String website) {
-		ArrayList<String> links = new ArrayList<String>();
 		GoGoAnimeList site = new GoGoAnimeList();
-		for(int i = 1; i <= 5; i++) {
-			for(String link : site.scrape(website + "?page=" + i)) {
-				links.add("https://gogoanime3.net" + link);
-			}
-		}
 		
-		GoGoAnimeResponse response = new GoGoAnimeResponse();
-		response.listResponse(links);
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter("IO/GoGoAnime/output.txt"))) {
+			
+			for(int i = 1; i <= 95; i++) {
+				for(Anime anime : site.scrape(website + "anime-list.html?page=" + i)) {
+					writer.write(anime.toString() + "\n");
+				}
+				print("Page: " + i);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

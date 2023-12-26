@@ -1,16 +1,19 @@
 package main;
 
 import main.factory.GoGoAnimeListFactory;
-import main.scraper.GoGoAnime;
+import main.factory.MangaHubListFactory;
 
+import static main.util.Utility.print;
+
+@SuppressWarnings("unused")
 public class Main {
 
 	public static void main(String[] args) {
-		GoGoAnime site = new GoGoAnime();
-		GoGoAnimeListFactory a = new GoGoAnimeListFactory();
+		MangaHubListFactory mangahub = new MangaHubListFactory();
+		GoGoAnimeListFactory gogoanime = new GoGoAnimeListFactory();
 		
-		// site.scrape("https://gogoanime3.net/category/monster");
-		a.createList("https://gogoanime3.net/anime-list.html");
+		// mangahub.createList("https://mangahub.io/");
+		gogoanime.createList("https://gogoanime3.net/");
 	}
 
 }

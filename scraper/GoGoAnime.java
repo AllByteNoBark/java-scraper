@@ -8,6 +8,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import main.object.Anime;
+import static main.util.Utility.print;
 
 public class GoGoAnime extends BaseScraper {
 	public Anime scrape(String website) {
@@ -19,6 +20,7 @@ public class GoGoAnime extends BaseScraper {
 		String art = null;
 		
 		try {
+			print(website);
 			Document html = Jsoup.connect(website).get();
 			
 			Element animeInfoBody = html.selectFirst("div.anime_info_body").selectFirst("div.anime_info_body_bg");
@@ -33,7 +35,7 @@ public class GoGoAnime extends BaseScraper {
 				String temp = p.selectFirst("span").text();
 				if(temp.equalsIgnoreCase("plot summary:")) {
 					description = p.text();
-					description = description.substring(temp.length()+1, description.length());
+					description = description.substring(temp.length(), description.length());
 				} else if(temp.equalsIgnoreCase("released:")) {
 					year = Integer.parseInt(p.text().substring(temp.length()+1, p.text().length()));
 				}
@@ -44,7 +46,6 @@ public class GoGoAnime extends BaseScraper {
 			e.printStackTrace();
 		}
 		
-		System.out.println(anime.toString());
 		return anime;
 	}
 }
