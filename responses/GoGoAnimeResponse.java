@@ -7,4 +7,9 @@ public class GoGoAnimeResponse extends BaseResponse {
 		print("Exporting GoGoAnime data to txt!");
 		this.toText("IO/GoGoAnime/output.txt");
 	}
+	
+	public void toJSON() {
+		print("Exporting GoGoAnime data to json!");
+		this.toJSON("IO/GoGoAnime/output.json");
+	}
 }

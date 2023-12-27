@@ -8,49 +8,23 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import main.object.Anime;
 import main.responses.GoGoAnimeResponse;
 import main.scraper.GoGoAnimeList;
 
-public class GoGoAnimeListFactory extends Thread{
+public class GoGoAnimeListFactory {
 	private final String website = "https://gogoanime3.net/";
-	private int startingPoint;
-	private int increment;
-	private String saveType; 
 	
-	public GoGoAnimeListFactory() {}
-	
-	public GoGoAnimeListFactory(int start, int inc, String type) {
-		this.startingPoint = start;
-		this.increment = inc;
-		this.saveType = type;
-	}
-	
-	public GoGoAnimeResponse scrape() {
-		return this.createList(this.website, 95, 1);
-	}
-	
-	public GoGoAnimeResponse scrape(int startingPoint, int increment) {
-		return this.createList(this.website, startingPoint, increment);
-	}
-	
-	public GoGoAnimeResponse createList(String website, int startingPoint, int increment) {
+	public void scrape(int startingPoint, int increment, String type) {
 		GoGoAnimeList site = new GoGoAnimeList();
-		GoGoAnimeResponse response = new GoGoAnimeResponse();
-		
 		int i = startingPoint;
 		String listLink = website + "anime-list.html?page=" + i;
 		do {
 			print("[GoGoAnime] Page: " + i);
-			listLink = website + "anime-list.html?page=" + i;
-			for(Anime anime : site.scrape(listLink)) {
-				response.add(anime);
-			}
+			saveResponse(site.scrape(listLink), type);
+			
 			i += increment;
 			listLink = website + "anime-list.html?page=" + i;
 		} while(checkNextPage(listLink));
-		
-		return response;
 	}
 	
 	private boolean checkNextPage(String website) {
@@ -71,18 +45,23 @@ public class GoGoAnimeListFactory extends Thread{
 		return false;
 	}
 	
-	public void run() {
-		switch(this.saveType) {
+	private void saveResponse(GoGoAnimeResponse instance, String type) {
+		switch(type.toLowerCase()) {
 			case "text":
-				scrape(this.startingPoint, this.increment).toText();
+				instance.toText();
+				break;
 			case "json":
-				scrape(this.startingPoint, this.increment).toText();
+				instance.toJSON();
+				break;
 			case "mysql":
-				scrape(this.startingPoint, this.increment).toText();
+				instance.toText();
+				break;
 			case "xml":
-				scrape(this.startingPoint, this.increment).toText();
+				instance.toText();
+				break;
 			default:
 				print("Data type not supported!");
+				break;
 		}
 	}
 }

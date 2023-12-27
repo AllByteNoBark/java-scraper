@@ -20,8 +20,17 @@ public class BaseResponse {
 	public void toText(String file) {
 		_TextResponse writer = new _TextResponse(file);
 		for(Object obj : this.objects) {
-			System.out.println(obj.toString());
 			writer.write(obj.toString());
 		}
+		writer.close();
+	}
+	
+	public void toJSON(String file) {
+		_TextResponse writer = new _TextResponse(file);
+		_JSONResponse json = new _JSONResponse();
+		for(Object obj : this.objects) {
+			writer.write(json.convert(obj) + ",\n");
+		}
+		writer.close();
 	}
 }

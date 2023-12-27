@@ -19,6 +19,7 @@ public class MangaHub extends BaseScraper{
 		String status = "";
 		
 		try {
+			print(website);
 			Document html = Jsoup.connect(website)
 					.userAgent("Mozilla")
 					.get();

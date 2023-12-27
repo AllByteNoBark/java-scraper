@@ -38,14 +38,14 @@ public class MangaHubListFactory extends Thread{
 		MangaHubList site = new MangaHubList();
 		MangaHubResponse response = new MangaHubResponse();
 		
-		int i = startingPoint;
+		int i = 1762;
 		String link = website + "search/page/" + i + "?q=&order=ALPHABET&genre=all";
 		do {
 			print("[MangaHub] Page: " + i);
 			for(Manga manga : site.scrape(link)) {
 				response.add(manga);
 			}
-			i += increment;
+			i += 1;
 			link = website + "search/page/" + i + "?q=&order=ALPHABET&genre=all";
 		} while(checkNextPage(link));
 		
@@ -75,14 +75,19 @@ public class MangaHubListFactory extends Thread{
 		switch(this.saveType) {
 			case "text":
 				scrape(this.startingPoint, this.increment).toText();
+				break;
 			case "json":
 				scrape(this.startingPoint, this.increment).toText();
+				break;
 			case "mysql":
 				scrape(this.startingPoint, this.increment).toText();
+				break;
 			case "xml":
 				scrape(this.startingPoint, this.increment).toText();
+				break;
 			default:
 				print("Data type not supported!");
+				break;
 		}
 	}
 }

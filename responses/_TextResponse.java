@@ -24,4 +24,12 @@ public class _TextResponse {
 			e.printStackTrace();
 		}
 	}
+	
+	public void close() {
+		try {
+			this.writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
