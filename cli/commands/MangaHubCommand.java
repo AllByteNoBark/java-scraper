@@ -4,9 +4,9 @@ import static main.util.Utility.print;
 
 import java.util.List;
 
-import main.factory.GoGoAnimeListFactory;
+import main.factory.MangaHubListFactory;
 
-public class GoGoAnimeCommand extends BaseCommand {
+public class MangaHubCommand extends BaseCommand {
 	private int requiredArguments = 1;
 	
 	public void scrape(List<String> args) {
@@ -26,10 +26,12 @@ public class GoGoAnimeCommand extends BaseCommand {
 			
 			lists[i-1] = new Thread(){
 				public void run() {
-					GoGoAnimeListFactory scraper = new GoGoAnimeListFactory();
+					MangaHubListFactory scraper = new MangaHubListFactory();
 					scraper.scrape(j, threads, args.get(0));
 				}
 			};
+			
+			
 		}
 		
 		for(Thread list : lists) {

@@ -11,7 +11,7 @@ import org.jsoup.select.Elements;
 import main.object.Anime;
 import static main.util.Utility.print;
 
-public class GoGoAnime extends BaseScraper {
+public class GoGoAnime {
 	public Anime scrape(String website) {
 		String name = "";
 		String description = "";

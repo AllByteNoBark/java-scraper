@@ -25,6 +25,8 @@ public class BaseResponse {
 		writer.close();
 	}
 	
+	public void toText() {}
+	
 	public void toJSON(String file) {
 		_TextResponse writer = new _TextResponse(file);
 		_JSONResponse json = new _JSONResponse();
@@ -33,4 +35,6 @@ public class BaseResponse {
 		}
 		writer.close();
 	}
+	
+	public void toJSON() {}
 }

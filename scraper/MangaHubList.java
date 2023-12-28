@@ -2,18 +2,16 @@ package main.scraper;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import main.object.Manga;
+import main.responses.MangaHubResponse;
 
 public class MangaHubList extends BaseScraper {
-	public ArrayList<Manga> scrape(String website) {
-		ArrayList<Manga> links = new ArrayList<Manga>();
+	public MangaHubResponse scrape(String website) {
+		MangaHubResponse response = new MangaHubResponse();
 		MangaHub scraper = new MangaHub();
 		
 		try {
@@ -25,12 +23,12 @@ public class MangaHubList extends BaseScraper {
 			Elements mangas = mangaList.select("div._1KYcM");
 			
 			for(Element manga : mangas) {
-				links.add(scraper.scrape(manga.select("div > div.media-manga > div.media-left > a").attr("href")));
+				response.add(scraper.scrape(manga.select("div > div.media-manga > div.media-left > a").attr("href")));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		return links;
+		return response;
 	}
 }

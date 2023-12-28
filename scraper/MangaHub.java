@@ -10,7 +10,7 @@ import org.jsoup.select.Elements;
 
 import main.object.Manga;
 import static main.util.Utility.print;
-public class MangaHub extends BaseScraper{
+public class MangaHub {
 	public Manga scrape(String website) {
 		String name =  "";
 		String summary = "";
@@ -19,7 +19,6 @@ public class MangaHub extends BaseScraper{
 		String status = "";
 		
 		try {
-			print(website);
 			Document html = Jsoup.connect(website)
 					.userAgent("Mozilla")
 					.get();

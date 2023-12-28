@@ -1,5 +1,7 @@
 package main.scraper;
 
+import main.responses.BaseResponse;
+
 public class BaseScraper {
-	public void scrape() {}
+	public BaseResponse scrape(String website) { return new BaseResponse(); }
 }

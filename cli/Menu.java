@@ -8,6 +8,7 @@ import static main.util.Utility.*;
 
 import main.cli.commands.BaseCommand;
 import main.cli.commands.GoGoAnimeCommand;
+import main.cli.commands.MangaHubCommand;
 
 public class Menu {
 	public static void run() {
@@ -17,7 +18,7 @@ public class Menu {
 			
 			HashMap<String, BaseCommand> commands = new HashMap<String, BaseCommand>();
 			commands.put("gogoanime3.net", new GoGoAnimeCommand());
-			commands.put("mangahub.io", new GoGoAnimeCommand());
+			commands.put("mangahub.io", new MangaHubCommand());
 
 			if(args[0].equalsIgnoreCase("exit") || args[0].equalsIgnoreCase("!")) {
 				break;
@@ -37,6 +38,7 @@ public class Menu {
 			
 			try {
 				BaseCommand command = commands.get(args[1]);
+				print("Scraping " + args[1]);
 				command.execute(command, args[0], sublistArgs);
 			} catch(NullPointerException e) {
 				print("Site not supported.");

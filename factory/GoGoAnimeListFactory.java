@@ -1,33 +1,21 @@
 package main.factory;
 
-import static main.util.Utility.print;
-
 import java.io.IOException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import main.responses.GoGoAnimeResponse;
 import main.scraper.GoGoAnimeList;
 
-public class GoGoAnimeListFactory {
+public class GoGoAnimeListFactory extends BaseFactory {
 	private final String website = "https://gogoanime3.net/";
 	
 	public void scrape(int startingPoint, int increment, String type) {
-		GoGoAnimeList site = new GoGoAnimeList();
-		int i = startingPoint;
-		String listLink = website + "anime-list.html?page=" + i;
-		do {
-			print("[GoGoAnime] Page: " + i);
-			saveResponse(site.scrape(listLink), type);
-			
-			i += increment;
-			listLink = website + "anime-list.html?page=" + i;
-		} while(checkNextPage(listLink));
+		scrape(startingPoint, increment, type, website + "anime-list.html?page=", new GoGoAnimeList());
 	}
 	
-	private boolean checkNextPage(String website) {
+	public boolean checkNextPage(String website) {
 		try {
 			Document html = Jsoup.connect(website).get();
 			
@@ -43,25 +31,5 @@ public class GoGoAnimeListFactory {
 		}
 		
 		return false;
-	}
-	
-	private void saveResponse(GoGoAnimeResponse instance, String type) {
-		switch(type.toLowerCase()) {
-			case "text":
-				instance.toText();
-				break;
-			case "json":
-				instance.toJSON();
-				break;
-			case "mysql":
-				instance.toText();
-				break;
-			case "xml":
-				instance.toText();
-				break;
-			default:
-				print("Data type not supported!");
-				break;
-		}
 	}
 }
