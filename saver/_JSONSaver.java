@@ -1,10 +1,10 @@
-package main.responses;
+package main.saver;
 
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.ObjectMapper; 
 import com.fasterxml.jackson.databind.ObjectWriter;
 
-public class _JSONResponse {
+public class _JSONSaver {
 	private ObjectWriter mapper = new ObjectMapper().writer().withDefaultPrettyPrinter();
 	
 	public String convert(Object obj) {

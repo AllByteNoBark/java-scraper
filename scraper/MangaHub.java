@@ -8,7 +8,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import main.object.Manga;
+import main.response.Manga;
+
 import static main.util.Utility.print;
 public class MangaHub {
 	public Manga scrape(String website) {
@@ -58,6 +59,7 @@ public class MangaHub {
 		} catch (IOException e) {
 			print("[Error]: " + e.getMessage());
 			if(e.getClass() == SocketTimeoutException.class) {
+				print("Retrying.");
 				scrape(website);
 			}
 		}

@@ -8,7 +8,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import main.object.Anime;
+import main.response.Anime;
+
 import static main.util.Utility.print;
 
 public class GoGoAnime {
@@ -42,12 +43,17 @@ public class GoGoAnime {
 						description = description.substring(temp.length()+1, description.length());
 					}
 				} else if(temp.equalsIgnoreCase("released:")) {
-					year = Integer.parseInt(p.text().substring(temp.length()+1, p.text().length()));
+					if(p.text().length() == temp.length()) {
+						year = 0;
+					} else {
+						year = Integer.parseInt(p.text().substring(temp.length()+1, p.text().length()));
+					}
 				}
 			}
 		} catch (IOException e) {
 			print("[Error]: " + e.getMessage());
 			if(e.getClass() == SocketTimeoutException.class) {
+				print("Retrying.");
 				scrape(website);
 			}
 		}

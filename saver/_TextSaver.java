@@ -1,14 +1,14 @@
-package main.responses;
+package main.saver;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class _TextResponse {
+public class _TextSaver {
 	private FileWriter file = null;
 	private BufferedWriter writer = null;
 	
-	public _TextResponse(String filepath) {
+	public _TextSaver(String filepath) {
 		try {
 			this.file = new FileWriter(filepath, true);
 			this.writer = new BufferedWriter(this.file);

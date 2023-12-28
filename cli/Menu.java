@@ -35,11 +35,16 @@ public class Menu {
 
 			List<String> sublistArgs = Arrays.asList(args);
 			sublistArgs = sublistArgs.subList(2, sublistArgs.size());
+			final List<String> sublistArgsFinal = sublistArgs;
 			
 			try {
-				BaseCommand command = commands.get(args[1]);
-				print("Scraping " + args[1]);
-				command.execute(command, args[0], sublistArgs);
+				new Thread() {
+					public void run() {
+						BaseCommand command = commands.get(args[1]);
+						print("Scraping " + args[1]);
+						command.execute(command, args[0], sublistArgsFinal);
+					}
+				}.start();
 			} catch(NullPointerException e) {
 				print("Site not supported.");
 			}

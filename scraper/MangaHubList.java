@@ -7,11 +7,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import main.responses.MangaHubResponse;
+import main.saver.MangaHubSaver;
 
-public class MangaHubList extends BaseScraper {
-	public MangaHubResponse scrape(String website) {
-		MangaHubResponse response = new MangaHubResponse();
+public class MangaHubList extends BaseListScraper {
+	public MangaHubSaver scrape(String website) {
+		MangaHubSaver response = new MangaHubSaver();
 		MangaHub scraper = new MangaHub();
 		
 		try {

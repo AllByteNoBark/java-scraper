@@ -36,7 +36,13 @@ public class MangaHubCommand extends BaseCommand {
 		
 		for(Thread list : lists) {
 			list.start();
+			try {
+				list.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
+		print("MangaHub finished! All the data was saved as " + args.get(0) + "!");
 	}
 	
 	private int setThreads(List<String> args) {

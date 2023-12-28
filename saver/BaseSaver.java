@@ -1,8 +1,8 @@
-package main.responses;
+package main.saver;
 
 import java.util.ArrayList;
 
-public class BaseResponse {
+public class BaseSaver {
 	private ArrayList<Object> objects = new ArrayList<>();
 	
 	public ArrayList<Object> getObjects() {
@@ -18,23 +18,23 @@ public class BaseResponse {
 	}
 
 	public void toText(String file) {
-		_TextResponse writer = new _TextResponse(file);
+		_TextSaver writer = new _TextSaver(file);
 		for(Object obj : this.objects) {
 			writer.write(obj.toString());
 		}
 		writer.close();
 	}
 	
-	public void toText() {}
+	public void toText(int pageNum) {}
 	
 	public void toJSON(String file) {
-		_TextResponse writer = new _TextResponse(file);
-		_JSONResponse json = new _JSONResponse();
+		_TextSaver writer = new _TextSaver(file);
+		_JSONSaver json = new _JSONSaver();
 		for(Object obj : this.objects) {
 			writer.write(json.convert(obj) + ",\n");
 		}
 		writer.close();
 	}
 	
-	public void toJSON() {}
+	public void toJSON(int pageNum) {}
 }

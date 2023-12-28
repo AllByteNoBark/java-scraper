@@ -7,11 +7,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import main.responses.GoGoAnimeResponse;
+import main.saver.GoGoAnimeSaver;
 
-public class GoGoAnimeList extends BaseScraper{
-	public GoGoAnimeResponse scrape(String website) {
-		GoGoAnimeResponse response = new GoGoAnimeResponse();
+public class GoGoAnimeList extends BaseListScraper{
+	public GoGoAnimeSaver scrape(String website) {
+		GoGoAnimeSaver response = new GoGoAnimeSaver();
 		GoGoAnime scraper = new GoGoAnime();
 		
 		try {

@@ -1,4 +1,4 @@
-package main.object;
+package main.response;
 
 public class Anime {
 	private String name;

@@ -2,34 +2,34 @@ package main.factory;
 
 import static main.util.Utility.print;
 
-import main.responses.BaseResponse;
-import main.scraper.BaseScraper;
+import main.saver.BaseSaver;
+import main.scraper.BaseListScraper;
 
 public class BaseFactory {
-	public void scrape(int startingPoint, int increment, String type, String listLink, BaseScraper site) {
+	public void scrape(int startingPoint, int increment, String type, String listLink, BaseListScraper site) {
 		int i = startingPoint;
 		String link = listLink + i;
-		do {
-			saveResponse(site.scrape(link), type);
+		while(checkNextPage(link)) {
+			saveResponse(site.scrape(link), type, i);
 			
 			i += increment;
 			link = listLink + i;
-		} while(checkNextPage(listLink));
+		}
 	}
 	
-	private void saveResponse(BaseResponse instance, String type) {
+	private void saveResponse(BaseSaver instance, String type, int pageNum) {
 		switch(type.toLowerCase()) {
 			case "text":
-				instance.toText();
+				instance.toText(pageNum);
 				break;
 			case "json":
-				instance.toJSON();
+				instance.toJSON(pageNum);
 				break;
 			case "mysql":
-				instance.toText();
+				instance.toText(pageNum);
 				break;
 			case "xml":
-				instance.toText();
+				instance.toText(pageNum);
 				break;
 			default:
 				print("Data type not supported!");
