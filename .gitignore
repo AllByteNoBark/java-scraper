@@ -1,0 +1,10 @@
+# IDE Project files
+.classpath
+.project
+
+# IDE Project folders
+/.settings
+/bin
+
+# I/O folder
+/IO
