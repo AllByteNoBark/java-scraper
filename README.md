@@ -6,7 +6,7 @@ A multithreaded Java Scraper built to support multiple sites and flexibility. Yo
 
 You only need to
 ```
-git clone https://github.com/PurpleBooth/a-good-readme-template.git
+git clone https://github.com/AllByteNoBark/java-scraper.git
 ```
 the project and open it in a Java IDE.
 
